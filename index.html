@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Minado</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      background-color: #12131C;
+      color: #FFFFFF;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .card {
+      background: #1D1F2F;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #2E3248;
+    }
+    .stat-title { font-size: 12px; color: #8C93B0; margin: 0; }
+    .stat-value { font-size: 22px; color: #00FFBB; font-weight: bold; margin: 5px 0; }
+    button {
+      background: linear-gradient(135deg, #00C6FF, #0072FF);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      width: 100%;
+      cursor: pointer;
+    }
+    button:active { transform: scale(0.98); }
+  </style>
+</head>
+<body>
+
+  <h2>GESTIÓN DE MINADO</h2>
+
+  <div class="card">
+    <p class="stat-title">Potencia total</p>
+    <p class="stat-value" id="power">2.83 GH/s</p>
+  </div>
+
+  <div class="card">
+    <p class="stat-title">Tokens Por Cobrar</p>
+    <p class="stat-value" id="balance">0.00000000</p>
+    <button onclick="cobrarTokens()">Cobrar Recompensa</button>
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    let balance = 0.00000000;
+    const rate = 0.00001000; 
+
+    setInterval(() => {
+      balance += rate;
+      document.getElementById('balance').innerText = balance.toFixed(8);
+    }, 1000);
+
+    function cobrarTokens() {
+      tg.HapticFeedback.impactOccurred('medium');
+      alert(`¡Has cobrado ${balance.toFixed(8)} tokens!`);
+      balance = 0.00000000;
+      document.getElementById('balance').innerText = balance.toFixed(8);
+    }
+  </script>
+</body>
+</html>
